@@ -110,21 +110,11 @@ char *Transformar_infixa_para_posfixa(char *infixa){
         //Quarto caso
         else if(infixa[i] == '^'){
             aux = desempilhar(p);
-            if(aux == '^'){
-                empilhar(p, aux);
-                empilhar(p, infixa[i]);
+            if(aux != -1){ 
+            empilhar(p, aux);
             }
-            else if(aux == '*' || aux == '/' || aux == '+' || aux == '-'){
-                posfixa[k++] = aux;
-                empilhar(p, infixa[i]);
-            }
-            else{ 
-                if(aux != -1){
-                    empilhar(p, aux);
-                }
-                empilhar(p, infixa[i]);
-            }
-        } 
+            empilhar(p, infixa[i]);
+        }
         
         //Quinto caso
         else if(infixa[i] == ')'){ //desempilha até chegar no '('
