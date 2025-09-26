@@ -76,7 +76,7 @@ char *Transformar_infixa_para_posfixa(char *infixa){
         //Segundo caso
         else if(infixa[i] == '-' || infixa[i] == '+'){
             aux = desempilhar(p);//desempilha o operador na pilha(para onde topo aponta)
-            while(aux != -1 && aux != '('){ // se a procedencia for maior ou igual do que '+' e '-'
+            while(aux != -1 && aux != '('){ // se a procedencia for maior ou igual do que '+' e '-' eu vou desempilhar até achar um de pŕocendica menor do que '+' ou '-'
                 posfixa[k] = aux;
                 k++;                                                                    
                 aux = desempilhar(p);
@@ -110,20 +110,21 @@ char *Transformar_infixa_para_posfixa(char *infixa){
         //Quarto caso
         else if(infixa[i] == '^'){
             aux = desempilhar(p);
-            while(aux != -1 && aux != '(' && aux != '+' && aux != '-' && aux != '*' && aux != '/'){
-               posfixa[k] = aux;
-               k++;
-               aux = desempilhar(p);
-            }
-            if(aux != -1){
+            if(aux == '^'){
                 empilhar(p, aux);
+                empilhar(p, infixa[i]);
             }
-            else{
-            empilhar(p,aux);
-            empilhar(p,infixa[i]);
-            }   
-        }
-                
+            else if(aux == '*' || aux == '/' || aux == '+' || aux == '-'){
+                posfixa[k++] = aux;
+                empilhar(p, infixa[i]);
+            }
+            else{ 
+                if(aux != -1){
+                    empilhar(p, aux);
+                }
+                empilhar(p, infixa[i]);
+            }
+        } 
         
         //Quinto caso
         else if(infixa[i] == ')'){ //desempilha até chegar no '('
